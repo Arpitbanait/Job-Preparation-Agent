@@ -26,10 +26,9 @@ Check installation:
 node -v
 npm -v
 
-yaml
-Copy code
 
----
+
+
 
 ## Getting Started (Local Development)
 
@@ -38,28 +37,19 @@ Copy code
 git clone https://github.com/Arpitbanait/Job-Preparation-Agent.git
 cd Job-Preparation-Agent/frontend/job-spark-ai
 
-yaml
-Copy code
 
----
 
 ### 2️⃣ Install dependencies
 
 npm install
 
-yaml
-Copy code
 
----
 
 ### 3️⃣ Start the development server
 
 npm run dev
 
-yaml
-Copy code
 
----
 
 ### 4️⃣ Open in browser
 
@@ -67,8 +57,6 @@ Once the server starts, open:
 
 http://localhost:5173
 
-yaml
-Copy code
 
 (The port may vary slightly — check the terminal output.)
 
@@ -89,10 +77,6 @@ job-spark-ai/
 ├── tailwind.config.ts
 └── vite.config.ts
 
-yaml
-Copy code
-
----
 
 ## Backend Integration
 
@@ -102,8 +86,6 @@ Make sure the backend server is running (default):
 
 http://localhost:8000
 
-yaml
-Copy code
 
 API calls from the frontend will interact with backend endpoints for:
 - Job search
@@ -125,8 +107,7 @@ API calls from the frontend will interact with backend endpoints for:
 
 npm run build
 
-yaml
-Copy code
+
 
 The optimized build will be generated in the `dist/` folder.
 
