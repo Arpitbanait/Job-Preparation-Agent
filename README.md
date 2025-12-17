@@ -230,7 +230,7 @@ Currently supports:
 
 ## Troubleshooting
 
-**Issue**: "OPENAI_API_KEY not found"
+**Issue**: "ANTHROPIC_API_KEY not found"
 - Solution: Add your API key to `.env` file
 
 **Issue**: Job scraper returns empty results
