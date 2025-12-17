@@ -1,3 +1,4 @@
+
 # Job Search AI System
 
 A comprehensive AI-powered job search platform with LangGraph agents, resume analysis, job scraping, and interview preparation.
@@ -283,3 +284,6 @@ pip install -r requirements.txt
 ```
 
 The application will automatically use SerpApi when the built-in scrapers return no results and `SERPAPI_API_KEY` is set.
+
+# Job-Preparation-Agent
+
