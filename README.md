@@ -1,289 +1,551 @@
 
-# Job Search AI System
+# Job Search AI - Job Preparation Agent
 
-A comprehensive AI-powered job search platform with LangGraph agents, resume analysis, job scraping, and interview preparation.
+A comprehensive AI-powered job search platform with LangGraph agents, resume analysis, job scraping, recruiter chatbot, and interview preparation.
 
-## Features
+## ✨ Features
 
-- **Resume Analysis & ATS Scoring**: Analyze resumes for ATS compatibility and get improvement suggestions
-- **LangGraph Agent Orchestration**: Multi-agent workflow for coordinated task execution
-- **Job Search**: Search and scrape jobs from multiple sources (Indeed, LinkedIn, Glassdoor)
-- **Interview Preparation**: AI-generated interview questions and answers for any role
-- **Semantic Matching**: Match resumes to job postings using embeddings
+- **Resume Analysis Pro**: Detailed ATS scoring with 8 granular subscores (skills, experience, education, certifications, projects, impact, formatting, keyword coverage)
+- **Job Search & Ranking**: Search and scrape jobs from Indeed, Naukri, and SerpApi with AI-powered ranking
+- **AI Recruiter Interview**: Voice-enabled recruiter chatbot with real-time performance analysis
+- **Interview Prep**: AI-generated interview Q&A with robust JSON parsing and batching
+- **Cover Letter Generator**: Auto-generate professional cover letters with your resume links (LinkedIn, GitHub, Portfolio)
+- **Email Application**: Send tailored application emails with resume attachment and auto-extracted profile links
+- **LangGraph Orchestration**: Multi-agent workflow for coordinated task execution
+- **Semantic Embeddings**: Match resumes to job postings using Hugging Face embeddings
 
-## Architecture
+## Tech Stack
 
-\`\`\`
-FastAPI (REST API)
-  ├── LangGraph Supervisor (Agent Orchestration)
-  │   ├── Resume Agent
-  │   ├── Job Search Agent
-  │   └── Interview Agent
-  └── Modules
-      ├── Resume ATS Scoring
-      ├── Job Scraper
-      ├── Interview Q&A Generator
-      └── Embeddings Manager
-\`\`\`
+**Backend:**
+- FastAPI (REST API framework)
+- Uvicorn (ASGI server)
+- LangGraph (AI agent orchestration)
+- Anthropic Claude (LLM)
+- pdfplumber & PyMuPDF (PDF extraction)
+- BeautifulSoup (web scraping)
+- Hugging Face (semantic embeddings)
 
-## Installation
+**Frontend:**
+- React 18 + TypeScript
+- Vite (build tool)
+- Tailwind CSS (styling)
+- shadcn/ui (component library)
+- Recharts (data visualization)
+- Web Speech API (voice recognition)
 
-1. Clone the repository:
+**Infrastructure:**
+- Python 3.11+
+- Node.js 18+
+- Conda/venv (Python environments)
+- npm/bun (Node package manager)
+
+## Quick Start
+
+### Prerequisites
+- Python 3.11+
+- Node.js 18+
+- Anthropic API Key (https://console.anthropic.com)
+- Git
+
+### Environment Setup
+
+1. **Clone the repository:**
 ```bash
-git clone <repo-url>
-cd job-search-ai
+git clone https://github.com/Arpitbanait/Job-Preparation-Agent.git
+cd Job-Preparation-Agent
 ```
 
-2. Create virtual environment:
+2. **Create Python virtual environment:**
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# On Windows:
+venv\Scripts\activate
+
+# On macOS/Linux:
+source venv/bin/activate
 ```
 
-3. Install dependencies:
+3. **Install Python dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Setup environment:
+4. **Set up environment variables:**
 ```bash
-cp .env.example .env
-# Edit .env with your API keys
+# Copy and edit the .env file
+cp .env.example .env  # or create manually
 ```
 
-## Running the Application
+Add to `.env`:
+```env
+# Required
+ANTHROPIC_API_KEY=sk-ant-...your_key_here...
 
-### Development Server
-```bash
-python -m uvicorn app.main:app --reload
+# Optional (for resume extraction)
+SERPER_API_KEY=your_serper_key
+
+# Optional (for job scraping fallback)
+SERPAPI_API_KEY=your_serpapi_key
+
+# Optional (Gmail OAuth for email sending)
+# Follow: https://developers.google.com/gmail/api/quickstart/python
 ```
 
-The API will be available at `http://localhost:8000`
+---
 
-### API Documentation
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+## 🚀 Running the Backend
 
-## API Endpoints
+### Start FastAPI Server
 
-### Resume Analysis
 ```bash
-POST /api/v1/analyze-resume
-Content-Type: application/json
+# Navigate to project root
+cd /path/to/Job-Preparation-Agent
 
+# Activate virtual environment (if not already active)
+venv\Scripts\activate  # Windows
+# or
+source venv/bin/activate  # macOS/Linux
+
+# Start the server
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+**Output:**
+```
+INFO:     Uvicorn running on http://127.0.0.1:8000
+INFO:     Application startup complete
+```
+
+**API Documentation:**
+- Swagger UI: http://127.0.0.1:8000/docs
+- ReDoc: http://127.0.0.1:8000/redoc
+- Health Check: http://127.0.0.1:8000/api/v1/health
+
+### Available Backend Endpoints
+
+**Resume Analysis:**
+- `POST /api/v1/analyze-resume` - Basic ATS analysis
+- `POST /api/v1/resume/analyze/pro` - Detailed ATS with subscores (skill_match, experience, education, certifications, projects, impact, formatting, keyword_coverage)
+
+**Job Search:**
+- `POST /api/v1/search-jobs` - Search and rank jobs with AI scoring
+
+**Interview:**
+- `POST /api/v1/generate-interview-qa` - Generate interview questions
+- `POST /api/v1/recruiter/chat` - Chat with AI recruiter
+- `POST /api/v1/interview/analyze` - Analyze completed interview and get performance score
+
+**Cover Letter & Email:**
+- `POST /api/v1/generate-cover-letter` - Generate cover letter
+- `POST /api/v1/send-mail-oauth` - Send application email with resume attachment and profile links
+
+**Workflow:**
+- `POST /api/v1/workflow/job-apply/start` - Execute full job application workflow
+
+---
+
+## 🎨 Running the Frontend
+
+### Install Frontend Dependencies
+
+```bash
+# Navigate to frontend directory
+cd frontend/job-spark-ai
+
+# Install dependencies with npm or bun
+npm install
+# or
+bun install
+```
+
+### Start Development Server
+
+```bash
+# From frontend/job-spark-ai directory
+npm run dev
+# or
+bun run dev
+```
+
+**Output:**
+```
+VITE v5.4.21 ready in 1351 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.x.x:5173/
+```
+
+Open browser: **http://localhost:5173**
+
+### Frontend Features
+
+The React frontend includes 6 main sections:
+
+1. **Resume Analyzer**
+   - Upload PDF resume
+   - View detailed ATS scores (8 metrics)
+   - See matched/missing keywords
+   - Get improvement recommendations
+   - View radar chart and performance heatmap
+
+2. **Job Search**
+   - Enter job title and location
+   - Filter by salary range and job type
+   - View AI-ranked results
+   - Apply directly with resume
+
+3. **Interview Prep**
+   - Generate interview questions
+   - Select difficulty level (beginner/intermediate/advanced)
+   - Get Q&A pairs with explanations
+   - Practice before the real interview
+
+4. **AI Recruiter Chat**
+   - Voice-enabled interview simulation
+   - Real-time recruiter questions
+   - Speak naturally (browser speech recognition)
+   - End interview to see performance analysis
+   - Get score (0-100), strengths, improvements, and feedback
+
+5. **Cover Letter Generator**
+   - Upload resume and job description
+   - Auto-generate professional cover letter
+   - Ready to copy/paste or download
+
+6. **Workflow (Full Application)**
+   - Upload resume
+   - Select job posting
+   - Auto-generate cover letter
+   - Send application via email
+
+### Build for Production
+
+```bash
+# From frontend/job-spark-ai directory
+npm run build
+# or
+bun run build
+```
+
+Output will be in `dist/` folder.
+
+---
+
+## 📋 API Usage Examples
+
+### 1. Analyze Resume (Pro)
+
+```bash
+curl -X POST http://localhost:8000/api/v1/resume/analyze/pro \
+  -F "file=@resume.pdf" \
+  -F "job_description=5+ years Python, AWS, Docker experience"
+```
+
+**Response:**
+```json
 {
-  "content": "Resume text here...",
-  "file_type": "txt"
+  "overall_score": 82.5,
+  "subscores": {
+    "skill_match": 90.0,
+    "experience_score": 85.0,
+    "education_score": 75.0,
+    "certification_score": 60.0,
+    "projects_score": 80.0,
+    "impact_score": 88.0,
+    "formatting_score": 92.0,
+    "keyword_coverage": 85.0,
+    "final_ats_score": 82.5
+  },
+  "skills_match": {
+    "present": ["python", "aws", "docker", "fastapi"],
+    "missing": ["kubernetes", "terraform"],
+    "percentage": 90.0
+  },
+  "matched_keywords": [...],
+  "missing_keywords": [...],
+  "recommendations": ["Add Kubernetes experience", "Mention ML projects"],
+  "top_improvements": ["Add quantifiable achievements", "Use power verbs"]
 }
 ```
 
-### Job Search
-```bash
-POST /api/v1/search-jobs
-Content-Type: application/json
+### 2. Search Jobs
 
-{
-  "query": "Python Developer",
-  "location": "San Francisco, CA",
-  "salary_min": 100000,
-  "salary_max": 200000
-}
+```bash
+curl -X POST http://localhost:8000/api/v1/search-jobs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "Data Scientist",
+    "location": "San Francisco, CA",
+    "salary_min": 120000,
+    "salary_max": 180000,
+    "job_type": "Full-time"
+  }'
 ```
 
-### Interview Q&A Generation
-```bash
-POST /api/v1/generate-interview-qa
-Content-Type: application/json
+### 3. Generate Interview Q&A
 
-{
-  "job_title": "Senior Software Engineer",
-  "job_description": "5+ years experience with...",
-  "difficulty": "intermediate",
-  "num_questions": 10
-}
+```bash
+curl -X POST http://localhost:8000/api/v1/generate-interview-qa \
+  -H "Content-Type: application/json" \
+  -d '{
+    "job_title": "Senior Backend Engineer",
+    "job_description": "5+ years with Python, microservices, Docker, Kubernetes",
+    "difficulty": "intermediate",
+    "num_questions": 5
+  }'
 ```
 
-### Workflow Execution
-```bash
-POST /api/v1/workflow
-Content-Type: application/json
+### 4. Send Application Email with Resume
 
-{
-  "task_type": "resume",
-  "data": {
-    "content": "Resume text..."
-  }
-}
+```bash
+curl -X POST http://localhost:8000/api/v1/send-mail-oauth \
+  -F "to=hiring@company.com" \
+  -F "subject=Application for Senior Backend Engineer" \
+  -F "resume_pdf=@resume.pdf" \
+  -F "role=Senior Backend Engineer" \
+  -F "company=TechCorp" \
+  -F "short=true" \
+  -F "auto_links=true"
 ```
 
-## Configuration
+**Auto-generated email body:**
+```
+Hello TechCorp Hiring Team
+Role: Senior Backend Engineer
+Resume: Attached
+LinkedIn: https://linkedin.com/in/yourname
+GitHub: https://github.com/yourname
+Portfolio: https://yourname.dev
+Thanks,
+Your Name
+```
 
-Edit `.env` file to configure:
+---
 
-- **ANTHROPIC_API_KEY**: Your Anthropic Claude API key
-- **HUGGINGFACE_API_KEY**: Your Hugging Face API token (for embeddings)
-- **MODEL_NAME**: Claude model (claude-opus-4-1-20250805, claude-3-sonnet-20240229)
-- **EMBEDDINGS_MODEL**: Hugging Face embedding model (default: sentence-transformers/all-MiniLM-L6-v2)
-- **INDEED_ENABLED**: Enable Indeed job scraping
-- **MAX_JOBS_PER_SCRAPE**: Maximum jobs to scrape per request
-- **RESUME_MIN_SCORE**: Minimum ATS score threshold
+## 🔧 Configuration
 
-## Project Structure
+### `.env` Variables
 
-```bash
-job-search-ai/
+```env
+# API Keys
+ANTHROPIC_API_KEY=sk-ant-...
+SERPAPI_API_KEY=...
+SERPER_API_KEY=...
+
+# Model Configuration
+MODEL_NAME=claude-3-sonnet-20241022
+EMBEDDINGS_MODEL=sentence-transformers/all-MiniLM-L6-v2
+
+# Job Scraper
+MAX_JOBS_PER_SCRAPE=20
+INDEED_ENABLED=true
+
+# Resume Analysis
+RESUME_MIN_SCORE=40
+SKILL_WEIGHT=0.3
+EXPERIENCE_WEIGHT=0.2
+EDUCATION_WEIGHT=0.1
+CERTIFICATION_WEIGHT=0.1
+PROJECTS_WEIGHT=0.1
+IMPACT_WEIGHT=0.1
+FORMATTING_WEIGHT=0.1
+```
+
+---
+
+## 📂 Project Structure
+
+```
+Job-Preparation-Agent/
 ├── app/
-│   ├── main.py              # FastAPI application
-│   ├── config.py            # Configuration management
+│   ├── main.py                 # FastAPI app entry point
+│   ├── config.py               # Configuration loader
 │   └── api/
-│       ├── routes.py        # API endpoints
-│       └── schemas.py       # Pydantic models
+│       ├── routes.py           # All API endpoints
+│       └── schemas.py          # Pydantic request/response models
 ├── agents/
-│   ├── supervisor_agent.py  # LangGraph coordinator
-│   ├── resume_agent.py      # Resume analysis agent
-│   ├── job_search_agent.py  # Job search agent
-│   └── interview_agent.py   # Interview prep agent
+│   ├── supervisor_agent.py     # LangGraph coordinator
+│   ├── resume_agent.py         # Resume analysis
+│   ├── job_search_agent.py     # Job ranking/filtering
+│   ├── interview_agent.py      # Interview generation
+│   └── application_workflow.py # Full workflow orchestration
 ├── modules/
-│   ├── resume_ats.py        # ATS scoring engine
-│   ├── job_scraper.py       # Job scraping
-│   ├── interview_qa.py      # Interview QA generation
-│   └── embeddings.py        # Vector embeddings
+│   ├── resume_ats.py           # ATS scoring engine (8 metrics)
+│   ├── job_scraper.py          # Indeed, Naukri, SerpApi scraper
+│   ├── interview_qa.py         # Interview Q&A generator
+│   ├── cover_letter.py         # Cover letter + link extraction
+│   ├── gmail_sender.py         # OAuth email + attachments
+│   ├── resume_parser.py        # PDF/text parsing
+│   └── embeddings.py           # Semantic embeddings
 ├── utils/
-│   ├── parsers.py           # Text/PDF parsing
-│   └── validators.py        # Input validation
-└── requirements.txt
+│   ├── parsers.py              # Text extraction utilities
+│   └── validators.py           # Input validation
+├── frontend/
+│   └── job-spark-ai/
+│       ├── src/
+│       │   ├── App.tsx         # Main React app
+│       │   ├── components/
+│       │   │   ├── sections/   # ResumeAnalyzer, JobSearch, Interview, etc.
+│       │   │   ├── layout/     # Navbar, Footer
+│       │   │   └── ui/         # shadcn components
+│       │   ├── api/            # API client helpers
+│       │   ├── hooks/          # Custom React hooks
+│       │   └── pages/          # Page components
+│       ├── package.json        # Frontend dependencies
+│       └── vite.config.ts      # Vite configuration
+├── .env.example                # Environment variables template
+├── requirements.txt            # Python dependencies
+├── .gitignore                  # Git ignore patterns
+└── README.md                   # This file
 ```
 
-## Usage Examples
+---
 
-### Python Client
-```python
-import httpx
+## 🔑 API Key Setup
 
-async with httpx.AsyncClient() as client:
-    response = await client.post(
-        "http://localhost:8000/api/v1/analyze-resume",
-        json={
-            "content": "Your resume text...",
-            "file_type": "txt"
-        }
-    )
-    print(response.json())
+### Anthropic Claude
+1. Visit https://console.anthropic.com/
+2. Create an account or sign in
+3. Generate an API key
+4. Add to `.env`: `ANTHROPIC_API_KEY=sk-ant-...`
+
+### Gmail OAuth (for email sending)
+1. Go to https://developers.google.com/gmail/api/quickstart/python
+2. Click "Enable the Gmail API"
+3. Create OAuth 2.0 Client ID (Desktop app)
+4. Download credentials.json and place in project root
+5. First run will prompt browser login
+6. token.json will be auto-generated
+
+### SerpApi (optional, for job scraping fallback)
+1. Visit https://serpapi.com/
+2. Sign up and get API key
+3. Add to `.env`: `SERPAPI_API_KEY=...`
+
+---
+
+## ⚙️ Running Both Backend & Frontend Together
+
+**Terminal 1 (Backend):**
+```bash
+venv\Scripts\activate  # Windows
+uvicorn app.main:app --reload --port 8000
 ```
 
-### Workflow Execution
-```python
-async with httpx.AsyncClient() as client:
-    response = await client.post(
-        "http://localhost:8000/api/v1/workflow",
-        json={
-            "task_type": "resume",
-            "data": {
-                "content": "Resume text..."
-            }
-        }
-    )
-    workflow_id = response.json()["result"]["workflow_id"]
-    print(f"Workflow ID: {workflow_id}")
+**Terminal 2 (Frontend):**
+```bash
+cd frontend/job-spark-ai
+npm run dev
 ```
 
-## Advanced Features
+Then open: http://localhost:5173
 
-### ATS Scoring Weights
-Customize resume scoring in config.py:
-```python
-RESUME_WEIGHTS = {
-    "skills_match": 0.4,      # 40% weight
-    "experience": 0.3,         # 30% weight
-    "education": 0.2,          # 20% weight
-    "keywords": 0.1            # 10% weight
-}
-```
+---
 
-### Interview Difficulty Levels
-- **beginner**: Basic questions for entry-level
-- **intermediate**: Scenario-based questions (default)
-- **advanced**: System design and architecture questions
+## 🐛 Troubleshooting
 
-### Job Scraper Sources
-Currently supports:
-- Indeed (enabled by default)
-- LinkedIn (requires credentials)
-- Glassdoor (requires credentials)
+### Backend Issues
 
-## Performance Optimization
+**Issue:** `ModuleNotFoundError: No module named 'anthropic'`
+- Solution: Run `pip install -r requirements.txt`
+
+**Issue:** `ANTHROPIC_API_KEY not found`
+- Solution: Create `.env` file and add your API key
+
+**Issue:** Job scraper returns empty results
+- Solution: Indeed/Naukri may block; SerpApi fallback will be used if configured
+
+**Issue:** Resume upload fails
+- Solution: Ensure PyMuPDF is installed: `pip install PyMuPDF pdfplumber`
+
+### Frontend Issues
+
+**Issue:** `npm ERR! code ERESOLVE`
+- Solution: Use `npm install --legacy-peer-deps` or `bun install`
+
+**Issue:** API calls fail (CORS)
+- Solution: Backend must be running on http://127.0.0.1:8000
+
+**Issue:** Voice recognition not working
+- Solution: Use Chrome/Brave browser (Safari/Firefox support limited)
+
+---
+
+## 📊 Performance Benchmarks
 
 - Resume analysis: ~1-2 seconds
-- Job search: ~5-10 seconds (depending on source)
+- Job search: ~5-10 seconds
 - Interview QA generation: ~10-15 seconds
-- All operations support async/await for concurrent requests
+- Cover letter generation: ~3-5 seconds
+- Email sending: ~1-2 seconds
 
-## Roadmap
+---
 
-- [ ] Database persistence with PostgreSQL
-- [ ] LinkedIn and Glassdoor API integration
-- [ ] PDF resume parsing with better accuracy
-- [ ] Email integration for job alerts
-- [ ] Real-time job monitoring
-- [ ] Multi-language support
-- [ ] Web UI dashboard
-- [ ] Mobile app
+## 📝 Features by Endpoint
 
-## Troubleshooting
+### Resume Analysis
+- **Input:** PDF file + job description
+- **Output:** 8 detailed subscores, matched/missing keywords, ATS percentage, recommendations
+- **Processing:** Deterministic local engine (no random values)
 
-**Issue**: "ANTHROPIC_API_KEY not found"
-- Solution: Add your API key to `.env` file
+### Job Search
+- **Input:** Query, location, salary range, job type
+- **Output:** Ranked job listings (sorted by AI relevance)
+- **Sources:** Indeed, Naukri, SerpApi fallback
 
-**Issue**: Job scraper returns empty results
-- Solution: Ensure job source is enabled in `.env`
+### Interview
+- **Input:** Job title, description, difficulty, question count
+- **Output:** JSON array of Q&A pairs with explanations
+- **Levels:** beginner, intermediate, advanced
 
-**Issue**: Resume scoring is low
-- Solution: Add more technical skills and keywords to your resume
+### Recruiter Chat
+- **Input:** Message, conversation history, resume, job description
+- **Output:** AI recruiter response (concise questions)
+- **Voice:** Browser speech recognition + synthesis
 
-## Contributing
+### Email
+- **Input:** To address, subject, resume PDF, role, company
+- **Output:** Professional application email with attachment
+- **Auto-links:** LinkedIn, GitHub, Portfolio (extracted from resume)
 
-Contributions welcome! Please follow:
-1. Create feature branch
-2. Add tests for new functionality
-3. Submit pull request
+---
 
-## License
+## 🚢 Deployment
 
-MIT License - See LICENSE file for details
-
-## Support
-
-For issues and questions:
-- GitHub Issues: https://github.com/yourrepo/issues
-- Email: support@jobsearchai.com
-
-## Acknowledgments
-
-Built with:
-- LangChain & LangGraph for AI orchestration
-- FastAPI for REST API
-- Anthropic Claude for language understanding
-- Hugging Face for semantic embeddings
-- BeautifulSoup for web scraping
-
-## SerpApi (optional fallback)
-
-If some job sites block direct scraping (Indeed, LinkedIn, Glassdoor), you can use SerpApi as a reliable fallback. To enable:
-
-1. Get a SerpApi key at https://serpapi.com/
-2. Add it to your `.env` file:
-
+### Backend (Railway, Heroku, AWS)
 ```bash
-echo SERPAPI_API_KEY=your_serpapi_key >> .env
+# Build: Already works with pip/Python
+# Run: uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-3. Re-install dependencies (if you haven't already):
-
+### Frontend (Vercel, Netlify)
 ```bash
-pip install -r requirements.txt
+# Build: npm run build
+# Output: dist/ folder (static files)
 ```
 
-The application will automatically use SerpApi when the built-in scrapers return no results and `SERPAPI_API_KEY` is set.
+---
 
-# Job-Preparation-Agent
+## 📄 License
+
+MIT License - See LICENSE file
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+1. Create a feature branch (`git checkout -b feature/your-feature`)
+2. Commit changes (`git commit -m 'Add your feature'`)
+3. Push to branch (`git push origin feature/your-feature`)
+4. Open a Pull Request
+
+---
+
+## 📞 Support
+
+- **GitHub Issues:** https://github.com/Arpitbanait/Job-Preparation-Agent/issues
+- **Email:** support@jobpreparationai.com
+- **Discord:** (coming soon)
 
