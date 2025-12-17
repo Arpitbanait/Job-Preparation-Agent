@@ -1,73 +1,147 @@
-# Welcome to your Lovable project
+# Job Spark AI – Frontend
 
-## Project info
+This is the frontend application for the **Job Preparation AI Platform**.  
+It provides an interactive user interface for job search, resume analysis, interview preparation, and AI-powered workflows.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+## Tech Stack
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
 - React
-- shadcn-ui
+- TypeScript
+- Vite
 - Tailwind CSS
+- shadcn/ui
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Prerequisites
 
-## Can I connect a custom domain to my Lovable project?
+Make sure you have the following installed:
 
-Yes, you can!
+- Node.js (v18 or later recommended)
+- npm (comes with Node.js)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Check installation:
+node -v
+npm -v
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+yaml
+Copy code
+
+---
+
+## Getting Started (Local Development)
+
+### 1️⃣ Clone the repository
+
+git clone https://github.com/Arpitbanait/Job-Preparation-Agent.git
+cd Job-Preparation-Agent/frontend/job-spark-ai
+
+yaml
+Copy code
+
+---
+
+### 2️⃣ Install dependencies
+
+npm install
+
+yaml
+Copy code
+
+---
+
+### 3️⃣ Start the development server
+
+npm run dev
+
+yaml
+Copy code
+
+---
+
+### 4️⃣ Open in browser
+
+Once the server starts, open:
+
+http://localhost:5173
+
+yaml
+Copy code
+
+(The port may vary slightly — check the terminal output.)
+
+---
+
+## Project Structure
+
+job-spark-ai/
+├── public/
+├── src/
+│ ├── components/
+│ ├── pages/
+│ ├── hooks/
+│ ├── services/
+│ └── main.tsx
+├── index.html
+├── package.json
+├── tailwind.config.ts
+└── vite.config.ts
+
+yaml
+Copy code
+
+---
+
+## Backend Integration
+
+This frontend is designed to work with a **FastAPI backend**.
+
+Make sure the backend server is running (default):
+
+http://localhost:8000
+
+yaml
+Copy code
+
+API calls from the frontend will interact with backend endpoints for:
+- Job search
+- Resume analysis
+- Interview preparation
+- AI summaries
+
+---
+
+## Available Scripts
+
+- `npm run dev` – Start development server
+- `npm run build` – Build for production
+- `npm run preview` – Preview production build locally
+
+---
+
+## Build for Production
+
+npm run build
+
+yaml
+Copy code
+
+The optimized build will be generated in the `dist/` folder.
+
+---
+
+## Notes
+
+- Environment variables (if any) should be added using `.env` files.
+- Do not commit sensitive keys to the repository.
+
+---
+
+## Author
+
+**Arpit Banait**  
+GitHub: https://github.com/Arpitbanait  
+LinkedIn: https://www.linkedin.com/in/arpit-banait-350238283/
+
