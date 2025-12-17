@@ -156,7 +156,7 @@ job-search-ai/
 ## Usage Examples
 
 ### Python Client
-\`\`\`python
+```python
 import httpx
 
 async with httpx.AsyncClient() as client:
@@ -168,10 +168,10 @@ async with httpx.AsyncClient() as client:
         }
     )
     print(response.json())
-\`\`\`
+```
 
 ### Workflow Execution
-\`\`\`python
+```python
 async with httpx.AsyncClient() as client:
     response = await client.post(
         "http://localhost:8000/api/v1/workflow",
@@ -184,20 +184,20 @@ async with httpx.AsyncClient() as client:
     )
     workflow_id = response.json()["result"]["workflow_id"]
     print(f"Workflow ID: {workflow_id}")
-\`\`\`
+```
 
 ## Advanced Features
 
 ### ATS Scoring Weights
 Customize resume scoring in config.py:
-\`\`\`python
+```python
 RESUME_WEIGHTS = {
     "skills_match": 0.4,      # 40% weight
     "experience": 0.3,         # 30% weight
     "education": 0.2,          # 20% weight
     "keywords": 0.1            # 10% weight
 }
-\`\`\`
+```
 
 ### Interview Difficulty Levels
 - **beginner**: Basic questions for entry-level
