@@ -1,0 +1,33 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Core AI + Anthropic
+anthropic==0.75.0
+langchain==0.1.6
+langchain-core==0.1.23
+langchain-community==0.0.18
+langchain-anthropic==0.1.1
+langgraph==0.0.14
+
+# Resume Analyzer
+PyMuPDF==1.23.26
+pdfminer.six==20221105
+pdfplumber==0.10.3
+python-multipart==0.0.6
+
+# Scraper Dependencies
+beautifulsoup4==4.12.2
+lxml==6.0.2
+requests==2.31.0
+httpx==0.25.2
+fake-useragent==1.5.1
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Data Processing
+numpy==1.26.4
+pandas==2.3.3
+
+# Utilities
+python-dotenv==1.0.0
+rapidfuzz==3.14.3
