@@ -28,34 +28,34 @@ FastAPI (REST API)
 ## Installation
 
 1. Clone the repository:
-\`\`\`bash
+```bash
 git clone <repo-url>
 cd job-search-ai
-\`\`\`
+```
 
 2. Create virtual environment:
-\`\`\`bash
+```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-\`\`\`
+```
 
 3. Install dependencies:
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 
 4. Setup environment:
-\`\`\`bash
+```bash
 cp .env.example .env
 # Edit .env with your API keys
-\`\`\`
+```
 
 ## Running the Application
 
 ### Development Server
-\`\`\`bash
+```bash
 python -m uvicorn app.main:app --reload
-\`\`\`
+```
 
 The API will be available at `http://localhost:8000`
 
@@ -66,7 +66,7 @@ The API will be available at `http://localhost:8000`
 ## API Endpoints
 
 ### Resume Analysis
-\`\`\`bash
+```bash
 POST /api/v1/analyze-resume
 Content-Type: application/json
 
@@ -74,10 +74,10 @@ Content-Type: application/json
   "content": "Resume text here...",
   "file_type": "txt"
 }
-\`\`\`
+```
 
 ### Job Search
-\`\`\`bash
+```bash
 POST /api/v1/search-jobs
 Content-Type: application/json
 
@@ -87,10 +87,10 @@ Content-Type: application/json
   "salary_min": 100000,
   "salary_max": 200000
 }
-\`\`\`
+```
 
 ### Interview Q&A Generation
-\`\`\`bash
+```bash
 POST /api/v1/generate-interview-qa
 Content-Type: application/json
 
@@ -100,10 +100,10 @@ Content-Type: application/json
   "difficulty": "intermediate",
   "num_questions": 10
 }
-\`\`\`
+```
 
 ### Workflow Execution
-\`\`\`bash
+```bash
 POST /api/v1/workflow
 Content-Type: application/json
 
@@ -113,7 +113,7 @@ Content-Type: application/json
     "content": "Resume text..."
   }
 }
-\`\`\`
+```
 
 ## Configuration
 
@@ -129,7 +129,7 @@ Edit `.env` file to configure:
 
 ## Project Structure
 
-\`\`\`
+```bash
 job-search-ai/
 ├── app/
 │   ├── main.py              # FastAPI application
@@ -151,7 +151,7 @@ job-search-ai/
 │   ├── parsers.py           # Text/PDF parsing
 │   └── validators.py        # Input validation
 └── requirements.txt
-\`\`\`
+```
 
 ## Usage Examples
 
